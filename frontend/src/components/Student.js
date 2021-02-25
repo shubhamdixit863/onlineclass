@@ -1,6 +1,7 @@
 import React,{useEffect,useState} from 'react';
 import {useLocation} from "react-router-dom";
 import socketClient  from "socket.io-client";
+import axios from "axios";
 
 import { ListGroup,Button,Col} from 'react-bootstrap';
 import auth from './authentication/auth';
@@ -27,8 +28,8 @@ function Student() {
 
         // Loading All the live classes
       
-        fetch(`${socketServer}/api/liveClasses`).then(res=>res.json()).then(data=>{
-            setLiveClasses(data["data"]);
+        axios.get(`${socketServer}/api/liveClasses`).then(data=>{
+            setLiveClasses(data["data"].data);
 
         })
        

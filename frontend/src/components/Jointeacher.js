@@ -6,6 +6,7 @@ import {useHistory,useLocation} from "react-router-dom";
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
+import axios from "axios";
 const socketServer="http://localhost:5000";
 
 
@@ -93,15 +94,15 @@ function Jointeacher(props) {
          let subscribe=true;
         if(_selectedclassId)
         {
-            fetch(`${socketServer}/api/class/${_selectedclassId}`).then(res=>res.json()).then(data=>{
+            axios.get(`${socketServer}/api/class/${_selectedclassId}`).then(data=>{
                if(subscribe)
                {
-                  if(data["data"].isActive)
+                  if(data["data"].data.isActive)
                   {
                       history.push("/Teacher");
                       alert("You can't join running class as a teacher")
                   } 
-                setselectedClass(data["data"]);
+                setselectedClass(data["data"].data);
                }
                 
                

@@ -4,6 +4,7 @@ import { ListGroup,Button,Col} from 'react-bootstrap';
 import auth from './authentication/auth';
 import {useHistory,useLocation} from "react-router-dom";
 import queryString from 'query-string';
+import axios from "axios";
 const socketServer="http://localhost:5000";
 
 function Teacher() {
@@ -30,8 +31,8 @@ useEffect(()=>{
    
 
     // fetching all the classes in the db
-    fetch(`${socketServer}/api/classes`).then(res=>res.json()).then(data=>{
-        setClasses(data["data"]);
+    axios.get(`${socketServer}/api/classes`).then(data=>{
+        setClasses(data["data"].data);
         
     }).catch(err=>{
         console.log(err);
