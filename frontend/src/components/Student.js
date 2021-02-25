@@ -6,7 +6,7 @@ import axios from "axios";
 import { ListGroup,Button,Col} from 'react-bootstrap';
 import auth from './authentication/auth';
 import {useHistory} from "react-router-dom";
-const socketServer="http://localhost:5000";
+const socketServer="http://104.237.2.69:5000";
 function Student() {
     let history=useHistory();
     const [liveClasses,setLiveClasses]=useState([]);

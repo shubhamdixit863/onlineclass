@@ -5,7 +5,7 @@ import auth from './authentication/auth';
 import {useHistory,useLocation} from "react-router-dom";
 import queryString from 'query-string';
 import axios from "axios";
-const socketServer="http://localhost:5000";
+const socketServer="http://104.237.2.69:5000";
 
 function Teacher() {
     let history=useHistory();

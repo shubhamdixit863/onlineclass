@@ -7,7 +7,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
-const socketServer="http://localhost:5000";
+const socketServer="http://104.237.2.69:5000";
 
 
 function Alert(props) {
