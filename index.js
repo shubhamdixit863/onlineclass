@@ -64,7 +64,7 @@ let  io = socket(server, {
       
         // MAking the class live as well 
         db.checkIfclassHasTEacher(room.room).then(data=>{
-          // console.log("heyy 9999",data);
+        
            if(data)
             {
                 // Only Single Teacher is Allowed Per Class
@@ -88,6 +88,7 @@ let  io = socket(server, {
     });
 
     socket.on('join',function(room) {
+        console.log("Event emitted")
         if(socket.adapter.rooms.has(room["room"]))
         {
             // The room has been created and the student can join the room now
@@ -283,3 +284,5 @@ app.get("/api/class/:id",async(req,res)=>{
     res.status(200).json({data:_class})
 
 })
+
+module.exports=server;

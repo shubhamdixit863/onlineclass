@@ -1,6 +1,6 @@
 import React,{useEffect,useState} from 'react'
 import socketClient  from "socket.io-client";
-import { ListGroup,Button,Col} from 'react-bootstrap';
+import { ListGroup,Button,Col,Form} from 'react-bootstrap';
 import auth from './authentication/auth';
 import {useHistory,useLocation} from "react-router-dom";
 import Snackbar from '@material-ui/core/Snackbar';
@@ -20,8 +20,24 @@ function Joinstudent(props) {
     const [newUser,setNewUser]=useState("");
     const [open, setOpen] = React.useState(false);
     const [snackbarmessage,setsnackbarmessage]=useState("");
+    const [inclassmessage,setInclassMessage]=useState("");
     let history=useHistory();
 
+
+    let handLeChange=(event)=>{
+        setInclassMessage(event.target.value);
+    
+    }
+         let sendinternalmessage=()=>{
+           if( inclassmessage.length>0)
+           {
+          
+            socketObj.emit("classMessage",{room:props.id,message:inclassmessage});
+            setInclassMessage("");
+           }
+    
+             
+         }
 
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -105,9 +121,11 @@ function Joinstudent(props) {
         })
     
         socket.on('endclass', (msg) => {
-            setNewUser(+ new Date());
+           
             setsnackbarmessage(msg);
             setOpen(true);
+
+            setNewUser(+ new Date());
           
             history.push("/Teacher")
         });
@@ -182,6 +200,23 @@ function Joinstudent(props) {
 
     </ListGroup>:""}
 
+</Col>
+
+<Col md={{ span: 3, offset: 1 }}>
+
+<Form>
+ 
+   
+
+  <Form.Group controlId="formBasicPassword">
+    <Form.Label>Message</Form.Label>
+    <Form.Control type="text"  value={inclassmessage} placeholder="Message" onChange={(e)=>handLeChange(e)} />
+  </Form.Group>
+  
+  <Button variant="primary" type="button" onClick={sendinternalmessage}>
+    Submit
+  </Button>
+</Form>
 </Col>
         </>
     )

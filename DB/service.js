@@ -9,6 +9,8 @@ const classSchema = new Schema({
     startTime:Date,
     isLive:{type:Boolean,default:false},
     durationInHours:Number, // 
+    classStarttime:{type:Date,default:null},
+    classEndTime:{type:Date,default:null},
 
     teachers:[
         {
@@ -99,7 +101,7 @@ module.exports =class classRoomDb
        } 
 
        else{
-        return await this.classRoomObj.updateMany({_id:room.room,"students.active":!status},{$set:{"students.$.leavingTime":moment().format("YYYY-MM-DD HH:mm:ss"),"students.$.active":status}})
+        return await this.classRoomObj.updateMany({_id:room.room,"students.active":!status},{$set:{"students.$.leavingTime":moment().format("YYYY-MM-DD HH:mm:ss"),"students.$.active":status,classEndTime:moment().format("YYYY-MM-DD HH:mm:ss")}})
        }
     }
 
@@ -108,7 +110,7 @@ module.exports =class classRoomDb
     async findClassByIdAndTeacherName(id,username)
     {
         let data=await this.classRoomObj.findOne({_id:id ,"teachers.username":username});
-        //console.log("heyyyy-----",data);
+      
         if(data)
         {
             return true;
@@ -123,7 +125,7 @@ module.exports =class classRoomDb
     {
         if(room.role==="Teacher")
         {
-            await this.classRoomObj.updateOne({_id:room.room},{$set:{isLive:true} ,$addToSet: { "teachers": { username:room.username,joiningTime:moment().format("YYYY-MM-DD HH:mm:ss") } }})
+            await this.classRoomObj.updateOne({_id:room.room},{$set:{isLive:true,classStarttime:moment().format("YYYY-MM-DD HH:mm:ss")} ,$addToSet: { "teachers": { username:room.username,joiningTime:moment().format("YYYY-MM-DD HH:mm:ss") } }})
         }
 
         else{
@@ -161,7 +163,7 @@ async getClassById(id)
 async checkIfclassHasTEacher(id)
 {
     let data=await this.classRoomObj.findOne({_id:id});
-   // console.log("heyyyy-----",data);
+   
     if(data.teachers.length>0)
     {
         return true;

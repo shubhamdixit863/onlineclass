@@ -75,8 +75,10 @@ function Jointeacher(props) {
         })
     
         socket.on('endclass', (msg) => {
-            setNewUser(+ new Date());
-            history.push("/Teacher")
+          setsnackbarmessage(msg);
+          setOpen(true);
+            history.push("/Teacher");
+           
         });
      
         }
@@ -140,6 +142,7 @@ let handLeChange=(event)=>{
        if( inclassmessage.length>0)
        {
         socketObj.emit("classMessage",{room:props.id,message:inclassmessage})
+        setInclassMessage("");
        }
 
          

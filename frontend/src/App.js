@@ -13,6 +13,7 @@ import UnProtectedroutes from './components/authentication/UnProtectedroutes';
 import Admin from './components/Admin';
 import Jointeacher from './components/Jointeacher';
 import Joinstudent from './components/Joinstudent';
+
 function App() {
   return (
    <>
@@ -36,7 +37,7 @@ function App() {
 
           <UnProtectedroutes exact path="/"  component={() => <Login/>} />
 
-          <Route exact path="/"  component={() => <Admin/>} />
+          <Route exact path="/admin"  component={() => <Admin/>} />
         </Switch>
     
   </Row>
