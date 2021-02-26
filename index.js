@@ -1,8 +1,10 @@
+require('dotenv').config()
 const express = require("express");
 const socket = require("socket.io");
 const cors=require("cors");
 const service =require("./DB/service");
 const db=new service('mongodb+srv://logan:1234@cluster0.x6qlj.mongodb.net/covid?retryWrites=true&w=majority');
+const path=require("path");
 
 
 // Application setup
@@ -285,4 +287,16 @@ app.get("/api/class/:id",async(req,res)=>{
 
 })
 
-module.exports=server;
+
+// Serving the static file only in prod
+if(process.env.NODE_ENV==="production")
+{
+    
+ 
+  app.use(express.static('frontend/build'));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'));
+  });
+
+}
