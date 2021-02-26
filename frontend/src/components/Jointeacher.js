@@ -59,6 +59,7 @@ function Jointeacher(props) {
         console.log(`Disconnected: ${s.id}`));
         
         socket.on('message', (msg) => {
+          setNewUser(+ new Date());
             setsnackbarmessage(msg);
             setOpen(true);
           
@@ -75,8 +76,7 @@ function Jointeacher(props) {
         })
     
         socket.on('endclass', (msg) => {
-          setsnackbarmessage(msg);
-          setOpen(true);
+        alert(msg)
             history.push("/Teacher");
            
         });

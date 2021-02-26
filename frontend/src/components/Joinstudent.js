@@ -98,13 +98,14 @@ function Joinstudent(props) {
         console.log(`Disconnected: ${s.id}`));
         
         socket.on('message', (msg) => {
+          setNewUser(+ new Date());
             setsnackbarmessage(msg);
             setOpen(true);
+
         });
 
         socket.on('errorjoining', (msg) => {
-            setsnackbarmessage(msg);
-            setOpen(true);
+            alert(msg);
             history.push("/Student")
           });
         
@@ -121,13 +122,8 @@ function Joinstudent(props) {
         })
     
         socket.on('endclass', (msg) => {
-           
-            setsnackbarmessage(msg);
-            setOpen(true);
-
-            setNewUser(+ new Date());
-          
             history.push("/Teacher")
+            alert(msg);
         });
      
         }
